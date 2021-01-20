@@ -18,11 +18,23 @@ function printTime() {
 }
 
 function printMinutes() {
-  // ... your code goes here
+  let minutes = chronometer.getMinutes();
+  let minutesStr = minutes.toString();
+  minutesStr = minutesStr.padStart(2,0,0);
+  const minDec = document.getElementById('minDec');
+  minDec.innerText = minutesStr[0]
+  const minUni = document.getElementById('minUni');
+  minUni.innerText = minutesStr[1]
 }
 
 function printSeconds() {
-  // ... your code goes here
+  let seconds = chronometer.getSeconds();
+  let secondsStr = seconds.toString();
+  secondsStr = secondsStr.padStart(2,0,0);
+  const secDec = document.getElementById('secDec');
+  secDec.innerText = secondsStr[0]
+  const secUni = document.getElementById('secUni');
+  secUni.innerText = secondsStr[1]
 }
 
 // ==> BONUS
@@ -31,7 +43,10 @@ function printMilliseconds() {
 }
 
 function printSplit() {
-  // ... your code goes here
+  const splits = document.getElementById('splits');
+  splits.appendChild("li");
+  const liTag = document.querySelector('li');
+  liTag.innerText = chronometer.splitClick();
 }
 
 function clearSplits() {
@@ -55,11 +70,44 @@ function setResetBtn() {
 }
 
 // Start/Stop Button
-btnLeft.addEventListener('click', () => {
-  // ... your code goes here
-});
+btnLeft.addEventListener(
+  "click", 
+  () => {
+    if (chronometer.currentTime === 0) {
+      chronometer.startClick();
+      btnLeft.classList.remove("stop");
+      btnLeft.classList.adds("start");
+      btnLeft.innerText = "STOP";
+
+      btnRight.classList.remove("reset");
+      btnRight.classList.add("split");
+      btnRight.innerText = "SPLIT";
+    }
+    else {
+      chronometer.stopClick();
+      btnLeft.classList.remove("start");
+      btnLeft.classList.add("stop");  
+      btnLeft.innerText = "START";  
+
+      btnRight.classList.remove("split");
+      btnRight.classList.add("reset");  
+      btnRight.innerText = "RESET";   
+    }
+  }
+);
 
 // Reset/Split Button
-btnRight.addEventListener('click', () => {
-  // ... your code goes here
-});
+btnRight.addEventListener(
+  "click", 
+  () => {
+    if (chronometer.currentTime === 0) {
+      chronometer.resetClick()
+
+    }
+    else {
+      chronometer.splitClick()
+
+    }
+    
+  }
+);
